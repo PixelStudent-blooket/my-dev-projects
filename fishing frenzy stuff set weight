@@ -1,6 +1,3 @@
-
-
-
 (async () => {
     const findReactHandler = () => {
         const root = document.querySelector('#app > div > div');
