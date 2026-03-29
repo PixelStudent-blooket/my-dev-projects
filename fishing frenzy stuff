@@ -1,0 +1,40 @@
+ /* Blooket Fishing Frenzy my-dev-projects Weight Utility */
+(async () => {
+    const getStateNode = () => {
+        const root = document.querySelector('#app > div > div');
+        if (!root) return null;
+        const stateNode = Object.values(root)[1]?.children?.[0]?._owner?.stateNode;
+        return stateNode || null;
+    };
+
+    const stateNode = getStateNode();
+
+    if (!stateNode) {
+        alert("Error: Script must be run during an active Fishing Frenzy game!");
+        return;
+    }
+
+    const inputWeight = prompt("blooket.net says: how much weight do ya want?");
+    
+    if (inputWeight !== null && !isNaN(inputWeight)) {
+        const weightValue = parseInt(inputWeight);
+        
+        try {
+            // Update the game state directly
+            stateNode.setState({ 
+                weight: weightValue,
+                totalWeight: weightValue 
+            });
+
+            // Optional: Maximize lure to maintain high weight gains
+            stateNode.setState({ lure: 5 });
+
+            alert("Success! Weight set to " + weightValue.toLocaleString() + " lbs.");
+        } catch (err) {
+            console.error("State injection failed:", err);
+            alert("Failed to inject weight. Ensure you are on the main game screen.");
+        }
+    } else if (inputWeight !== null) {
+        alert("Please enter a valid number.");
+    }
+})();
